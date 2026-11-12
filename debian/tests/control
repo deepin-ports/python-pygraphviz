@@ -1,0 +1,6 @@
+# pygraphviz tests are set up as a module (with __init__.py)
+# which confuses pytest in the source dir (attempts circular import)
+# so run tests from the installed module
+
+Test-Command: set -e; for py in `py3versions -s`; do $py -m pytest /usr/lib/python3/dist-packages/pygraphviz/tests/; done
+Depends: python3-pygraphviz, python3-pytest, python3-all

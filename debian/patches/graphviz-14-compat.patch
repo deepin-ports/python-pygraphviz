@@ -1,0 +1,26 @@
+From 4ba5226458e0c5f28ca6f5e1de08283978651141 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Mat=C4=9Bj=20Cepl?= <mcepl@cepl.eu>
+Date: Wed, 22 Oct 2025 19:51:56 +0200
+Subject: [PATCH] fix: correct signature of gvRenderData() function
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+For compatibility with graphviz 14.*
+
+Fixes: https://github.com/pygraphviz/pygraphviz/issues/567
+Replaces: https://github.com/pygraphviz/pygraphviz/pull/566
+Signed-off-by: Matěj Cepl <mcepl@cepl.eu>
+
+--- a/pygraphviz/graphviz.i
++++ b/pygraphviz/graphviz.i
+@@ -338,7 +338,7 @@
+ /* three lines are straight from the SWIG manual.  */
+ %include <cstring.i>
+ %include <typemaps.i>
+-%cstring_output_allocate_size(char **result, unsigned int* size, free(*$1));
+-int gvRenderData(GVC_t *gvc, Agraph_t* g, char *format, char **result, unsigned int *size);
++%cstring_output_allocate_size(char **result, size_t* size, free(*$1));
++int gvRenderData(GVC_t *gvc, Agraph_t* g, char *format, char **result, size_t *size);
+ /* Free memory allocated and pointed to by *result in gvRenderData */
+ extern void gvFreeRenderData (char* data);

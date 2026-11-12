@@ -1,35 +1,45 @@
 Source: python-pygraphviz
 Section: python
-Testsuite: autopkgtest-pkg-python
 Priority: optional
-Maintainer: Debian Python Team <team+python@tracker.debian.org>,
-Uploaders: Alexandre Detiste <tchet@debian.org>,
-Build-Depends: debhelper-compat (= 13),
-               dh-sequence-python3,
-               graphviz <!nocheck>,
-               libgraphviz-dev,
-               pkgconf,
-               python3-all-dev,
-               python3-pytest <!nocheck>,
-               python3-numpydoc <!nodoc>,
-               python3-setuptools,
-Build-Depends-Indep: dh-sequence-sphinxdoc <!nodoc>,
-                     python3-sphinx <!nodoc>,
-                     python3-sphinx-gallery <!nodoc>,
-                     python3-sphinx-rtd-theme <!nodoc>,
+Maintainer: Debian Python Team <team+python@tracker.debian.org>
+Uploaders:
+ Alexandre Detiste <tchet@debian.org>,
+Build-Depends:
+ debhelper-compat (= 13),
+ dh-sequence-python3,
+ graphviz <!nocheck>,
+ libgraphviz-dev (>= 14~),
+ libgvplugin-neato-layout <!nocheck>,
+ pkgconf,
+ pybuild-plugin-pyproject,
+ python3-all-dev,
+ python3-numpydoc <!nodoc>,
+ python3-pytest <!nocheck>,
+ python3-setuptools,
+ swig, dos2unix,
+Build-Depends-Indep:
+ dh-sequence-sphinxdoc <!nodoc>,
+ python3-sphinx <!nodoc>,
+ python3-sphinx-gallery <!nodoc>,
+ python3-sphinx-rtd-theme <!nodoc>,
 Rules-Requires-Root: no
-Standards-Version: 4.7.0
+Standards-Version: 4.7.2
 Homepage: https://pygraphviz.github.io/
 Vcs-Git: https://salsa.debian.org/python-team/packages/python-pygraphviz.git
 Vcs-Browser: https://salsa.debian.org/python-team/packages/python-pygraphviz
+X-Style: black
+Testsuite: autopkgtest-pkg-python
 
 Package: python3-pygraphviz
 Architecture: any
-Depends: graphviz,
-         ${misc:Depends},
-         ${python3:Depends},
-         ${shlibs:Depends},
-Suggests: python-pygraphviz-doc,
+Depends:
+ graphviz,
+ libgvplugin-neato-layout,
+ ${misc:Depends},
+ ${python3:Depends},
+ ${shlibs:Depends},
+Suggests:
+ python-pygraphviz-doc,
 Description: Python interface to the Graphviz graph layout and visualization package (Python 3)
  Pygraphviz is a Python interface to the Graphviz graph layout and
  visualization package.
@@ -42,8 +52,9 @@ Description: Python interface to the Graphviz graph layout and visualization pac
 Package: python-pygraphviz-doc
 Section: doc
 Architecture: all
-Depends: ${misc:Depends},
-         ${sphinxdoc:Depends},
+Depends:
+ ${misc:Depends},
+ ${sphinxdoc:Depends},
 Multi-Arch: foreign
 Description: Python interface to the Graphviz graph layout and visualization package (doc)
  Pygraphviz is a Python interface to the Graphviz graph layout and

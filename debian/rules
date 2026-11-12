@@ -5,8 +5,7 @@ DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 
 export PYBUILD_NAME=pygraphviz
-
-export PYBUILD_AFTER_BUILD_python3=cd doc ; PYTHONPATH={build_dir} $(MAKE) html ; cd ..
+export PYBUILD_AFTER_BUILD=cd doc ; PYTHONPATH={build_dir} $(MAKE) html ; cd ..
 
 %:
 	dh $@ --buildsystem=pybuild
@@ -14,10 +13,14 @@ export PYBUILD_AFTER_BUILD_python3=cd doc ; PYTHONPATH={build_dir} $(MAKE) html 
 override_dh_installexamples:
 	dh_installexamples -ppython-pygraphviz-doc examples/*
 
-override_dh_installdocs:
-	dh_installdocs
+execute_after_dh_installdocs:
 	dh_installdocs -ppython-pygraphviz-doc doc/build/html
 
-override_dh_auto_clean:
-	dh_auto_clean
-	rm -rf doc/build
+execute_before_dh_auto_build:
+	cp -f pygraphviz/graphviz.py pygraphviz/graphviz.py.bak
+	cp -f pygraphviz/graphviz_wrap.c pygraphviz/graphviz_wrap.c.bak
+	make swig
+
+execute_before_dh_auto_clean:
+	mv -f pygraphviz/graphviz.py.bak pygraphviz/graphviz.py || true
+	mv -f pygraphviz/graphviz_wrap.c.bak pygraphviz/graphviz_wrap.c || true
